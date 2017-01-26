@@ -1,10 +1,12 @@
 package com.example.codevs.pintxoway;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,10 +17,22 @@ import static android.support.v7.widget.RecyclerView.*;
  * Created by Borja on 25/01/2017.
  */
 
-public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyViewHolder> {
+public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyViewHolder> implements OnClickListener {
 
     private Context context;
     private ArrayList<LocalListCard> cardsList;
+    private View.OnClickListener listener;
+
+    @Override
+    public void onClick(View view) {
+        if(listener != null){
+            listener.onClick(view);
+        }
+    }
+
+    public void onClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
@@ -42,6 +56,7 @@ public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyVi
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.local_list_item_card,parent,false);
+        itemView.setOnClickListener(this);
 
         return new MyViewHolder(itemView);
     }
