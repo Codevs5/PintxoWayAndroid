@@ -22,10 +22,13 @@
             android:layout_height="wrap_content"
             android:text="Distancia: "
             android:textSize="25dp"/>
+
         <EditText
+            android:id="@+id/ETDistance"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
+            android:text="500"
             android:inputType="number"
             android:selectAllOnFocus="true"
             android:hint="Numero"/>
@@ -71,5 +74,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Buscar Local"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textoPruebaJson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="hola"
+            android:textSize="20dp"/>
+
+    </LinearLayout>
 
 </LinearLayout>

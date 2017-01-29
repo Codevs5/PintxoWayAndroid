@@ -7,9 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginTop="20dp"
+    android:layout_marginTop="10dp"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
+    android:layout_marginBottom="10dp"
     app:cardElevation="3dp"
     app:cardCornerRadius="1dp">
 
@@ -58,7 +59,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/TVlocalListCardMainData"
+                        android:id="@+id/TVLocalListCardName"
                         android:text="Bar josefina"
                         android:gravity="top"
                         android:textColor="@color/blanco"
@@ -67,7 +68,7 @@
                         android:textSize="30dp"/>
 
                     <TextView
-                        android:id="@+id/distance"
+                        android:id="@+id/TVLocalListCardDistance"
                         android:text=" - 400m"
                         android:textColor="@color/grisSubindice"
                         android:layout_width="match_parent"
@@ -85,7 +86,7 @@
                     android:layout_marginTop="5dp">
 
                     <TextView
-                        android:id="@+id/TVlocalListCardData2"
+                        android:id="@+id/TVLocalListCardVicinity"
                         android:text="asdasd"
                         android:textColor="@color/blanco"
                         android:layout_width="match_parent"
@@ -104,7 +105,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/TVlocalListCardData3"
+                        android:id="@+id/TVLocalListCardType"
                         android:text="asdasw"
                         android:textColor="@color/blanco"
                         android:gravity="top"
