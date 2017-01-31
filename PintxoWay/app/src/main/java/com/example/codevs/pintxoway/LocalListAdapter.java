@@ -80,6 +80,11 @@ public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyVi
         holder.distance.setText(card.getDistance());
         holder.vicinity.setText(card.getVicinity());
         holder.type.setText(card.getType());
+        if(card.getType().equals("bar")){
+            holder.type.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_restaurant_black_24dp, 0, 0, 0);
+        }else{
+            holder.type.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_bar_black_24dp, 0, 0, 0);
+        }
         holder.cardImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -24,8 +24,12 @@ public class LocalListCard {
             name = local.getString("name");
             vicinity = local.getString("vicinity");
             icon = "";//local.getString("icon");
-            distance ="- ";// + local.getString("distance") + " m";
-            type = "bar";//local.getString("type");
+            distance =" - 400 m";// + local.getString("distance") + " m";
+            if(Math.random() < 0.5){
+                type="bar";
+            }else{
+                type = "restaurante";//local.getString("type");
+            }
             place_level ="0";// local.getString("priceLvl");
             //falta la foto
 

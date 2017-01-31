@@ -3,6 +3,8 @@ package com.example.codevs.pintxoway;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,6 +38,9 @@ public class LocalListActivity extends AppCompatActivity {
     private LocalListAdapter adapter;
     private ArrayList<LocalListCard> cardList = new ArrayList<>();
     private JSONObject localJsonList;
+    private String function,lat,lon,rad;
+    private SwipeRefreshLayout refreshLayout;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,34 +52,24 @@ public class LocalListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_list);
 
-        ;
+        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiperefresh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                selectFunction();
+            }
+        });
 
 
-        String func = getIntent().getExtras().getString("function");
+        function = getIntent().getExtras().getString("function");
+        lat = getIntent().getExtras().getString("lat");
+        lon = getIntent().getExtras().getString("lon");
+        rad = getIntent().getExtras().getString("rad");
         //Toast.makeText(LocalListActivity.this,getIntent().getExtras().getString("lat"),Toast.LENGTH_SHORT).show();
 
+        selectFunction();
 
-        if(adapter == null){
-            adapter = new LocalListAdapter(this,cardList);
-        }
-        reciclerView = (RecyclerView) findViewById(R.id.recyclerViewLocales);
-        reciclerView.setAdapter(adapter);
-        reciclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        switch (func){
-            case "byDistance":
-                String lat = "43.306449";
-                String lon = "-2.010487";
-                String rad = "500";
-                //getIntent().getExtras().getString("lat"),getIntent().getExtras().getString("lon"),getIntent().getExtras().getString("distance")
-                getLocalListByDistance(lat,lon,rad);
-                break;
-
-            default:
-                //todo que hacer si no hay parametro o no es una de sus funcionalidades
-                Toast.makeText(this.getBaseContext(),"sin llamada a funcionalidad",Toast.LENGTH_SHORT).show();
-                break;
-        }
 
 
         /*adapter.onClickListener(new View.OnClickListener() {
@@ -86,42 +81,42 @@ public class LocalListActivity extends AppCompatActivity {
         });*/
     }
 
-    public void initCards(JSONObject json){
-        //TODO Consumir el servicio para generar todas tarjetas de los bares
+    private void selectFunction(){
+        switch (function){
+            case "byDistance":
+                lat = "43.306449";
+                lon = "-2.010487";
+                rad = "500";
+                Log.i("params",getIntent().getExtras().getString("lat") + getIntent().getExtras().getString("lon")+getIntent().getExtras().getString("distance"));
+                getLocalListByDistance(lat,lon,rad);
+                break;
 
+            default:
+                //todo que hacer si no hay parametro o no es una de sus funcionalidades
+                Toast.makeText(this.getBaseContext(),"sin llamada a funcionalidad",Toast.LENGTH_SHORT).show();
+                break;
+        }
+    }
+    private void initCards(JSONObject json){
+        //TODO Consumir el servicio para generar todas tarjetas de los bares
+        Log.i("initCard",json.toString());
         try {
             JSONArray localListJson = json.getJSONArray("locals");
-            for(int i = 0; i<localListJson.length();i++){
+            for(int i = 0; i < localListJson.length();i++){
                 JSONObject local = localListJson.getJSONObject(i);
-                Log.i("JsonLocalCard:", local.toString());
                 LocalListCard card = new LocalListCard(local);
                 cardList.add(card);
             }
+            drawCardList();
         }catch (Exception e){
             Log.i("err:Json del servicio:",e.toString());
         }
-        /*for (int i=0; i < 10; i++){
-            json = new JSONObject();
-            try {
-                json.accumulate("placeId","1");
-                json.accumulate("name","Google Sydney");
-                json.accumulate("distance","400");
-                json.accumulate("vicinity","sidney, mucho, viaje");
-                json.accumulate("open now",true);
-                json.accumulate("type","bar");
-                json.accumulate("placeLvl","1");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            LocalListCard card = new LocalListCard(json);
-            cardList.add(card);
-        }*/
     }
 
     private void getLocalListByDistance(String lat , String lon, String rad){
 
-        String path = "http://10.110.4.144:3000/local/list?lat=43.306449&long=-2.010487&rad=500";//PintxoService.getInstance(LocalListActivity.this).getDistancePath(lat,lon,rad);
+        String path = "http://192.168.0.23:3000/local/list?lat=43.306449&long=-2.010487&rad=500";//
+        path = PintxoService.getInstance(LocalListActivity.this).getDistancePath(lat,lon,rad);
         Log.i("path",path);
 
         //Tiene que llamar al servicio, obtener los datos, procesarlos y crear las tarjetas
@@ -129,10 +124,10 @@ public class LocalListActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try {
+                    localJsonList = response;
+                    Log.i("json" ,localJsonList.toString());
+                    initCards(localJsonList);
                     //if(response.toString().equals("\"error\": Parámetros incorrectos"))
-                    //initCards(new JSONObject());//response);
-                    Log.i("json",response.toString());
-                    //localJsonList = response.getJSONObject("locals");
                 }catch (Exception e){
                     //Todo Que se hace con la excepcion
                 }
@@ -141,16 +136,25 @@ public class LocalListActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LocalListActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                Toast.makeText(LocalListActivity.this,"No se ha podido acceder a Internet",Toast.LENGTH_LONG).show();
+                //TODO hacer una asink tas para que cada cierto tiempo vuelva a recargar la vista
 
             }
         });
 
         PintxoService.getInstance(LocalListActivity.this).addToRequestQue(jsonObjectRequest);
 
-        //TOdo borrar la llamada cuendo el servicio este operativo
-        //Log.i("LocalsJson",localJsonList.toString());
-        //initCards(localJsonList);
+    }
 
+    private void drawCardList(){
+        findViewById(R.id.llLocalListProgress).setVisibility(View.GONE);
+        refreshLayout.setRefreshing(false);
+        Log.i("refreshLayout","quitando");
+        if(adapter == null){
+            adapter = new LocalListAdapter(this,cardList);
+        }
+        reciclerView = (RecyclerView) findViewById(R.id.recyclerViewLocales);
+        reciclerView.setAdapter(adapter);
+        reciclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 }

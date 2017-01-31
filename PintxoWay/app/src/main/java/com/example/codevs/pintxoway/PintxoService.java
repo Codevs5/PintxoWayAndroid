@@ -16,7 +16,7 @@ public class PintxoService{
     private static PintxoService mInstance;
     private RequestQueue requestQueue;
     private static Context context;
-    private String serverPath="10.110.4.144:3000";
+    private String serverPath="http://192.168.0.23:3000";
 
     private PintxoService(Context context){
         this.context = context;

@@ -67,9 +67,9 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
             public void onClick(View view) {
                 Intent intent = new Intent(FunctionActivity.this, LocalListActivity.class);
                 intent.putExtra("function","byDistance");
-                intent.putExtra("distance", distance.getText());
-                intent.putExtra("lat",lat);
-                intent.putExtra("lon",lon);
+                intent.putExtra("distance", distance.getText().toString());
+                intent.putExtra("lat",String.valueOf(lat));
+                intent.putExtra("lon",String.valueOf(lon));
                 startActivity(intent);
             }
         });
@@ -116,7 +116,7 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
 
 
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3/*cada 3 minutos hace una peticion de localizacion*/,0,this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000/*cada 3 minutos hace una peticion de localizacion*/,0,this);
 
 
         /*criterio para los proveedores*/

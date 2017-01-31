@@ -60,22 +60,22 @@
 
                     <TextView
                         android:id="@+id/TVLocalListCardName"
-                        android:text="Bar josefina"
+                        android:text="xxxxxxxxxxxxxxxxx"
                         android:gravity="top"
                         android:textColor="@color/blanco"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="30dp"/>
+                        android:textSize="25dp"/>
 
                     <TextView
                         android:id="@+id/TVLocalListCardDistance"
-                        android:text=" - 400m"
+                        android:text=" - xxxxx"
                         android:textColor="@color/grisSubindice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="2dp"
                         android:gravity="bottom"
-                        android:textSize="15dp"/>
+                        android:textSize="16dp"/>
 
                 </LinearLayout>
 
@@ -87,10 +87,11 @@
 
                     <TextView
                         android:id="@+id/TVLocalListCardVicinity"
-                        android:text="asdasd"
+                        android:text="xxxxxxxx"
                         android:textColor="@color/blanco"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="bottom"
                         android:drawableLeft="@drawable/ic_place_black_24dp"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/colorAccent"
@@ -106,11 +107,10 @@
 
                     <TextView
                         android:id="@+id/TVLocalListCardType"
-                        android:text="asdasw"
+                        android:text="xxxxxxxx"
                         android:textColor="@color/blanco"
-                        android:gravity="top"
+                        android:gravity="bottom"
                         android:layout_width="wrap_content"
-                        android:drawableRight="@drawable/ic_attach_money4dp"
                         android:drawablePadding="5dp"
                         android:drawableTint="@color/blanco"
                         android:drawableLeft="@drawable/ic_restaurant_menu_24dp"
