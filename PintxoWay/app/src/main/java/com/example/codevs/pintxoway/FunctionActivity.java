@@ -19,6 +19,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -66,7 +67,7 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
             public void onClick(View view) {
                 Intent intent = new Intent(FunctionActivity.this, LocalListActivity.class);
                 intent.putExtra("function","byDistance");
-                intent.putExtra("distnace", distance.getText());
+                intent.putExtra("distance", distance.getText());
                 intent.putExtra("lat",lat);
                 intent.putExtra("lon",lon);
                 startActivity(intent);
@@ -113,6 +114,8 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
         lat =  (location.getLatitude());
         lon =  (location.getLongitude());
 
+
+
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,3/*cada 3 minutos hace una peticion de localizacion*/,0,this);
 
 
@@ -126,6 +129,8 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
     @Override
     public void onLocationChanged(Location location) {
 
+        Log.i("localizacion","punto GPS actualizado");
+        Toast.makeText(FunctionActivity.this,"GPS encontrado",Toast.LENGTH_SHORT).show();
         lat =  (location.getLatitude());
         lon =  (location.getLongitude());
     }

@@ -1,5 +1,7 @@
 package com.example.codevs.pintxoway;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,9 +24,9 @@ public class LocalListCard {
             name = local.getString("name");
             vicinity = local.getString("vicinity");
             icon = "";//local.getString("icon");
-            distance ="- " + local.getString("distance") + " m";
-            type = local.getString("type");
-            place_level = local.getString("placeLvl");
+            distance ="- ";// + local.getString("distance") + " m";
+            type = "bar";//local.getString("type");
+            place_level ="0";// local.getString("priceLvl");
             //falta la foto
 
         } catch (JSONException e) {

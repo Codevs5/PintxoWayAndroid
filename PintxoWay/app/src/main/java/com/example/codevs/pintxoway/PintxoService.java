@@ -16,6 +16,7 @@ public class PintxoService{
     private static PintxoService mInstance;
     private RequestQueue requestQueue;
     private static Context context;
+    private String serverPath="10.110.4.144:3000";
 
     private PintxoService(Context context){
         this.context = context;
@@ -41,7 +42,7 @@ public class PintxoService{
         requestQueue.add(request);
     }
 
-    public String getDistancePath(String lat, String Long, String rad){
-        return " /local/list?lat=:"+lat+"&long=:"+Long+"&rad=:"+rad;
+    public String getDistancePath(String lat, String lon, String rad){
+        return serverPath+"/local/list?lat="+lat+"&long="+lon+"&rad="+rad;
     }
 }
