@@ -74,8 +74,8 @@ public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        LocalListCard card = cardsList.get(position);
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
+        final LocalListCard card = cardsList.get(position);
         holder.name.setText(card.getName());
         holder.distance.setText(card.getDistance());
         holder.vicinity.setText(card.getVicinity());
@@ -88,7 +88,11 @@ public class LocalListAdapter extends RecyclerView.Adapter<LocalListAdapter.MyVi
         holder.cardImage.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(view.getContext(),"clicada",Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(view.getContext(),"clicada"+ card.getPlaceID(),Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(view.getContext(),LocalDetailActivity.class);
+                intent.putExtra("place_id",card.getPlaceID());
+                view.getContext().startActivity(intent);
             }
         });
     }

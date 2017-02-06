@@ -28,6 +28,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import static android.R.attr.animation;
+import static android.R.attr.key;
 import static android.R.attr.layout;
 import static android.R.id.list;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
@@ -84,9 +85,9 @@ public class LocalListActivity extends AppCompatActivity {
     private void selectFunction(){
         switch (function){
             case "byDistance":
-                lat = "43.306449";
-                lon = "-2.010487";
-                rad = "500";
+                //lat = "43.306449";
+                //lon = "-2.010487";
+                //rad = "500";
                 Log.i("params",getIntent().getExtras().getString("lat") + getIntent().getExtras().getString("lon")+getIntent().getExtras().getString("distance"));
                 getLocalListByDistance(lat,lon,rad);
                 break;
@@ -127,6 +128,7 @@ public class LocalListActivity extends AppCompatActivity {
                     localJsonList = response;
                     Log.i("json" ,localJsonList.toString());
                     initCards(localJsonList);
+                    getImage(localJsonList.getJSONArray("locals").getJSONObject(0).getJSONObject("photo").getString("photoid"),"400");
                     //if(response.toString().equals("\"error\": Parámetros incorrectos"))
                 }catch (Exception e){
                     //Todo Que se hace con la excepcion
@@ -156,5 +158,31 @@ public class LocalListActivity extends AppCompatActivity {
         reciclerView = (RecyclerView) findViewById(R.id.recyclerViewLocales);
         reciclerView.setAdapter(adapter);
         reciclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    private void getImage(String id, String maxWith){
+        Log.i("getimg","entro");
+        String path ="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference="+id+"&key=AIzaSyCJNCjLiDnNGcjdYlrp0mqbN84yriB8Pnk";
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, path, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    localJsonList = response;
+                    Log.i("json" ,localJsonList.toString());
+                }catch (Exception e){
+                    //Todo Que se hace con la excepcion
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LocalListActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                //TODO hacer una asink tas para que cada cierto tiempo vuelva a recargar la vista
+
+            }
+        });
+
+        PintxoService.getInstance(LocalListActivity.this).addToRequestQue(jsonObjectRequest);
     }
 }

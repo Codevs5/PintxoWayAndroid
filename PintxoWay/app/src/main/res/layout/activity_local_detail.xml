@@ -1,16 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_local_detail"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.codevs.pintxoway.LocalDetailActivity">
+    android:scrollbars="vertical">
 
-    <com.example.codevs.pintxoway.DynamicImageView
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/imagenpruebabar"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:id="@+id/llLocaDetailProgress">
+
+        <ProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/activity_local_detail"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.codevs.pintxoway.LocalDetailActivity"
+        android:scrollbars="vertical">
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/imagenpruebabar"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:orientation="vertical"
+            android:background="@color/colorAccent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/TVLocalDetailName"
+                    android:text="xxxxxxxxxxxxxxxx"
+                    android:gravity="top"
+                    android:textColor="@color/cardview_dark_background"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:textSize="26dp"/>
+
+                <TextView
+                    android:id="@+id/TVLocalLocalDetailDistance"
+                    android:text=" - xxxxx"
+                    android:textColor="@color/grisSubindice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:gravity="center"
+                    android:textSize="16dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/TVLocalDetailType"
+                android:textSize="18dp"
+                android:padding="5dp"
+                android:text="xxxxxxxxxxxxxx"
+                android:drawableLeft="@drawable/ic_local_cafe_black_24dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="10dp"
+            android:weightSum="3">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_local_pizza_black_24dp"
+                android:layout_weight="1" />
+
+            <View style="@style/DividerVertical"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_local_pizza_black_24dp"
+                android:layout_weight="1" />
+
+            <View style="@style/DividerVertical"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_local_pizza_black_24dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View style="@style/DividerHorizontal"></View>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:clickable="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:text="xxxxxxxxxxxxxxxx"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_place_black_24dp"
+                android:id="@+id/TVAddressLocalDetail"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="xxxxxxxxxxxxxxxx"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_phone_black_24dp"
+                android:id="@+id/TVPhoneNumberLocalDetail"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxxxxxxxx"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_web_black_24dp"
+                android:id="@+id/TVWebSiteLocalDetail"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="xxxxxxxxxxxxxxxx"
+                android:textSize="18dp"
+                android:drawableLeft="@drawable/ic_access_time_black_24dp"
+                android:id="@+id/TVHoursLocalDetail"/>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Productos"
+            android:textSize="20dp"/>
+
+        <ScrollView
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <HorizontalScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+                    <LinearLayout
+                        android:id="@+id/LProductList"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:orientation="horizontal"
+                        android:layout_weight="1">
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+            </LinearLayout>
+        </ScrollView>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/TVPruebaJsonDetail"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>
+</ScrollView>

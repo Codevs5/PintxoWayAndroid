@@ -16,7 +16,7 @@ public class PintxoService{
     private static PintxoService mInstance;
     private RequestQueue requestQueue;
     private static Context context;
-    private String serverPath="http://192.168.0.23:3000";
+    private String serverPath="https://limitless-shelf-15803.herokuapp.com";
 
     private PintxoService(Context context){
         this.context = context;
@@ -44,5 +44,9 @@ public class PintxoService{
 
     public String getDistancePath(String lat, String lon, String rad){
         return serverPath+"/local/list?lat="+lat+"&long="+lon+"&rad="+rad;
+    }
+
+    public String getLocalDetailPath(String place_id){
+        return serverPath+"/local/detail/"+place_id;
     }
 }
