@@ -148,6 +148,8 @@
                 android:textSize="18dp"
                 android:drawableLeft="@drawable/ic_web_black_24dp"
                 android:id="@+id/TVWebSiteLocalDetail"/>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

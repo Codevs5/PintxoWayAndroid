@@ -66,20 +66,15 @@ public class LocalListActivity extends AppCompatActivity {
         lat = getIntent().getExtras().getString("lat");
         lon = getIntent().getExtras().getString("lon");
         rad = getIntent().getExtras().getString("rad");
-        //Toast.makeText(LocalListActivity.this,getIntent().getExtras().getString("lat"),Toast.LENGTH_SHORT).show();
+
+        Log.i("func",function);
+        Log.i("rad",rad);
+        Log.i("lon",lon);
+        Log.i("lat",lat);
+
 
         selectFunction();
 
-
-
-
-        /*adapter.onClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(LocalListActivity.this,LocalDetailActivity.class);
-                startActivity(i);
-            }
-        });*/
     }
 
     private void selectFunction(){
@@ -88,7 +83,6 @@ public class LocalListActivity extends AppCompatActivity {
                 //lat = "43.306449";
                 //lon = "-2.010487";
                 //rad = "500";
-                Log.i("params",getIntent().getExtras().getString("lat") + getIntent().getExtras().getString("lon")+getIntent().getExtras().getString("distance"));
                 getLocalListByDistance(lat,lon,rad);
                 break;
 

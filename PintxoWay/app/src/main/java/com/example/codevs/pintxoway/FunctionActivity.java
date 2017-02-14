@@ -15,7 +15,9 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +54,9 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
     //para el GPS
     LocationManager locationManager;
     Location location;
+
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int My_PERMISSIONS_REQUEST_ACCESS_COARSE_LOCATION = 2;
     private double lon,lat;
 
     @Override
@@ -79,6 +84,50 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 
+        requestLocationPermission();
+
+
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            /*if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION)){
+                Log.i("fine loc","true");
+
+            }else{
+
+                Log.i("fine loc","true");
+            }*/
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }else{
+            requestLocationPermission();
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                return;
+            }else{
+                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            }
+        }else{
+            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+        }
+
+        lat =  (location.getLatitude());
+        lon =  (location.getLongitude());
+
+
+
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000/*cada 3 minutos hace una peticion de localizacion*/,0,this);
+
+
+        /*criterio para los proveedores*/
+       // Criteria criteria = new Criteria();
+        //criteria.setAccuracy(Criteria.ACCURACY_HIGH);
+        //criteria.setSpeedAccuracy(Criteria.ACCURACY_HIGH);
+
+    }
+
+
+    private void requestLocationPermission(){
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             final AlertDialog.Builder  builder = new AlertDialog.Builder(this);
             builder.setMessage("La ubicación esta desactivada, ¿Desea activarla?")
@@ -100,30 +149,21 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
             alertDialog.setTitle("Ubicación");
             alertDialog.show();
         }
+    }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
-                return;
-            }else{
-                location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+    //para solicitar los permisos de localizaicon
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }else{
+
+                }
+                break;
             }
-        }else{
-            location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         }
-
-        lat =  (location.getLatitude());
-        lon =  (location.getLongitude());
-
-
-
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,10000/*cada 3 minutos hace una peticion de localizacion*/,2000,this);
-
-
-        /*criterio para los proveedores*/
-       // Criteria criteria = new Criteria();
-        //criteria.setAccuracy(Criteria.ACCURACY_HIGH);
-        //criteria.setSpeedAccuracy(Criteria.ACCURACY_HIGH);
-
     }
 
     @Override
@@ -148,12 +188,14 @@ public class FunctionActivity extends AppCompatActivity implements LocationListe
     @Override
     public void onProviderDisabled(String s) {
         Toast.makeText(getBaseContext(),"Provider Disabled",Toast.LENGTH_SHORT).show();
+        requestLocationPermission();
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){

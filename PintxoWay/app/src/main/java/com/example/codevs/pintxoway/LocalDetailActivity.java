@@ -26,7 +26,7 @@ public class LocalDetailActivity extends AppCompatActivity {
 
     private JSONObject detailListJson;
     private String place_id;
-    private TextView textView,nametextView,vicinityTexView,typeTexView,addressTextView,telTextView,webTextView;
+    private TextView textView,nametextView,distanceTextView,vicinityTexView,typeTexView,addressTextView,telTextView,webTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +34,7 @@ public class LocalDetailActivity extends AppCompatActivity {
 
         place_id = getIntent().getExtras().getString("place_id");
         textView = (TextView) findViewById(R.id.TVPruebaJsonDetail);
+        distanceTextView = (TextView) findViewById(R.id.TVLocalLocalDetailDistance);
         nametextView = (TextView) findViewById(R.id.TVLocalDetailName);
         typeTexView = (TextView) findViewById(R.id.TVLocalDetailType);
         addressTextView = (TextView) findViewById(R.id.TVAddressLocalDetail);
@@ -83,8 +84,10 @@ public class LocalDetailActivity extends AppCompatActivity {
         try {
             //infoJson = infoJson.getJSONObject("local");
             Log.i("setInfo",infoJson.toString());
+            infoJson = infoJson.getJSONObject("local");
             nametextView.setText(infoJson.getString("name"));
             addressTextView.setText(infoJson.getString("address"));
+            distanceTextView.setText(infoJson.getString("distance"));
             typeTexView.setText(infoJson.getJSONArray("types").getString(0));
             telTextView.setText(infoJson.getString("phoneNum"));
             webTextView.setText(Html.fromHtml(infoJson.getJSONObject("web").getString("mapURL")));
